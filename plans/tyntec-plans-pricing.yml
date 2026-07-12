@@ -1,0 +1,113 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: tyntec
+providerId: tyntec
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- CPaaS
+- Number Verification
+- SMS
+- WhatsApp
+- Messaging
+- Plans
+description: >-
+  tyntec bills on a usage / pay-per-use basis across its CPaaS products rather
+  than fixed subscription tiers. You fund an account balance in the tyntec Console
+  and per-transaction charges (per SMS, per WhatsApp conversation, per number
+  lookup / verification, per OTP) are deducted from it. Published rates below are
+  grounded where a public figure exists and flagged as such; most enterprise and
+  high-volume rates are quoted on request. Prices vary heavily by destination
+  country and, for WhatsApp, by conversation category.
+notes: >-
+  Rates change frequently and are destination-dependent. The SMS figure and
+  WhatsApp per-million-message range below come from public third-party and tyntec
+  pricing pages captured 2026-07; treat them as indicative and reconcile against
+  the tyntec Console and current tyntec pricing pages. Number verification / HLR
+  lookup per-unit pricing is not publicly published and is quoted on request.
+sources:
+- https://www.tyntec.com/docs/docs-center-sms-api-pricing-coverage
+- https://www.tyntec.com/helpcenter/docs/faqs/pricing/how-am-i-charged-when-i-send-sms-messages-old/
+- https://www.tyntec.com/helpcenter/docs/faqs/whatsapp-business/pricing/overview/
+- https://www.tyntec.com/
+plans:
+- id: tyntec-payg
+  name: Pay As You Go
+  type: usage
+  description: >-
+    Self-service usage billing against a prepaid account balance, with no setup
+    fee. Per-transaction charges are deducted as you send messages, run lookups,
+    or dispatch OTPs. Rates are destination-dependent.
+  entries:
+  - label: SMS Sent
+    name: sms_sent
+    type: usage
+    metric: messages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from EUR 0.0426 per SMS (destination-dependent; indicative)
+    userMultiplied: false
+  - label: WhatsApp Conversations
+    name: whatsapp_conversations
+    type: usage
+    metric: conversations
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: conversation-based pricing by category and country (WhatsApp rate plus tyntec fee)
+    userMultiplied: false
+  - label: Number Verification / Lookup
+    name: number_lookup
+    type: usage
+    metric: lookups
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-lookup, quoted on request
+    userMultiplied: false
+  - label: 2FA OTP
+    name: otp_sent
+    type: usage
+    metric: otp
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per OTP delivered (channel and destination dependent)
+    userMultiplied: false
+  elements:
+  - name: SMS API
+  - name: Conversations API (WhatsApp / Viber / SMS)
+  - name: Verify and Number Information APIs
+  - name: 2FA Authentication API
+- id: tyntec-enterprise
+  name: Enterprise / Committed Volume
+  type: enterprise
+  description: >-
+    Negotiated agreements for high-volume messaging, WhatsApp Business ISV
+    arrangements, dedicated numbers, committed-use discounts, SLAs, and direct
+    carrier connectivity. Contact tyntec sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Committed Volume Discounts
+  - name: WhatsApp ISV Model
+  - name: SLAs and Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

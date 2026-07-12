@@ -1,0 +1,103 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: tyntec
+providerId: tyntec
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- CPaaS
+- SMS
+- WhatsApp
+- Number Verification
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of tyntec spend. tyntec is a usage-billed CPaaS: cost is driven by
+  the volume of transactions across each product - SMS messages sent/received,
+  WhatsApp conversations (priced by category and country), number verification and
+  HLR lookups, and 2FA OTPs dispatched. Charges are deducted from a prepaid
+  account balance, with negotiated committed-volume agreements for enterprise
+  usage. The dominant cost drivers are messaging volume and destination mix, since
+  per-message and per-conversation rates vary widely by country and carrier.
+notes: >-
+  Per-unit rates are destination-dependent and, for verification / HLR lookups,
+  quoted on request; they are not fully reconciled here. Track spend per product
+  and per destination country. WhatsApp conversation charges pass through Meta's
+  category-based rate plus tyntec's fee.
+sources:
+- https://www.tyntec.com/docs/docs-center-sms-api-pricing-coverage
+- https://www.tyntec.com/helpcenter/docs/faqs/whatsapp-business/pricing/overview/
+- https://www.tyntec.com/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: tyntec
+serviceCategory: Communications and Messaging
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid / Monthly
+  billingCurrency: EUR
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: tyntec CPaaS
+  ServiceCategory: Communications and Messaging
+  ProviderName: tyntec
+  PublisherName: tyntec
+  InvoiceIssuerName: tyntec
+  BillingCurrency: EUR
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: sms_messages
+  description: SMS messages sent and received over the A2P network, billed per message by destination.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - destination_country
+  - direction
+- name: whatsapp_conversations
+  description: WhatsApp conversations, billed per conversation by category (marketing, utility, authentication, service) and country.
+  unit: conversations
+  aggregation: sum
+  dimensions:
+  - account
+  - destination_country
+  - conversation_category
+- name: number_lookups
+  description: Number verification and HLR / portability lookups, billed per transaction.
+  unit: lookups
+  aggregation: sum
+  dimensions:
+  - account
+  - lookup_type
+- name: otp_dispatched
+  description: 2FA one-time passwords dispatched, billed per OTP by channel and destination.
+  unit: otp
+  aggregation: sum
+  dimensions:
+  - account
+  - channel
+  - destination_country
+principles:
+- name: Visibility
+  description: Track transaction volume per product and per destination country; messaging cost is dominated by destination mix.
+- name: Allocation
+  description: Separate accounts or sender IDs per team/campaign so messaging and verification spend maps to cost centers.
+- name: Optimization
+  description: Verify numbers before messaging to avoid wasted sends to invalid/unreachable numbers; choose the right WhatsApp conversation category; consolidate volume for committed-use discounts.
+- name: Accountability
+  description: Assign owners per product line; review prepaid balance burn and monthly transaction volume against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

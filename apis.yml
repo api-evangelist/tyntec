@@ -1,0 +1,172 @@
+aid: tyntec
+url: https://raw.githubusercontent.com/api-evangelist/tyntec/refs/heads/main/apis.yml
+name: tyntec
+kind: company
+description: >-
+  tyntec is a CPaaS (Communications Platform as a Service) provider whose
+  api.tyntec.com REST APIs let businesses verify, authenticate, and engage mobile
+  consumers worldwide. The platform covers phone number verification and number
+  information (Verify API plus HLR lookup and global number portability), SMS
+  messaging, WhatsApp Business and other chat-app channels via the Conversations
+  API, and two-factor authentication / one-time passwords via the 2FA API. tyntec
+  is an authorized WhatsApp Business Solution Provider. All APIs authenticate with
+  an account API key sent in the apikey request header; tyntec publishes OpenAPI
+  definitions for them in the public tyntec/api-collection GitHub repository.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Number Verification
+- CPaaS
+- SMS
+- WhatsApp
+- Phone Number Intelligence
+- HLR Lookup
+- Two-Factor Authentication
+- OTP
+- Messaging
+- Number Portability
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: tyntec:tyntec-number-verification-api
+  name: tyntec Number Verification API
+  tags:
+  - Number Verification
+  - Phone Number Intelligence
+  - Validation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.tyntec.com/reference/verify/current.html
+  baseURL: https://api.tyntec.com/verify/v1
+  properties:
+  - url: https://www.tyntec.com/helpcenter/docs/
+    type: Documentation
+  - url: https://api.tyntec.com/reference/verify/current.html
+    type: APIReference
+  - url: openapi/tyntec-number-verification-openapi.yml
+    type: OpenAPI
+  - url: collections/tyntec-number-verification.postman_collection.json
+    type: PostmanCollection
+  - url: collections/tyntec-number-verification.opencollection.json
+    type: OpenCollection
+  - url: https://github.com/tyntec/api-collection/tree/master/verify
+    type: SourceCode
+  description: >-
+    Verify a phone number before saving it to a CRM, messaging it, or calling it.
+    Define reusable criteria templates (allowed line types, countries, reachable
+    subscriber required, reject disposable numbers) and validate any number
+    against them, returning validity, active-subscriber reachability, line type,
+    operator, country of origin, MCC/MNC, and disposable-number detection.
+- aid: tyntec:tyntec-number-information-api
+  name: tyntec Number Information API
+  tags:
+  - HLR Lookup
+  - Number Portability
+  - Phone Number Intelligence
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.tyntec.com/reference/verify/current.html
+  baseURL: https://api.tyntec.com/nis/v1
+  properties:
+  - url: https://www.tyntec.com/helpcenter/docs/
+    type: Documentation
+  - url: https://api.tyntec.com/reference/verify/current.html
+    type: APIReference
+  - url: openapi/tyntec-number-verification-openapi.yml
+    type: OpenAPI
+  - url: collections/tyntec-number-verification.postman_collection.json
+    type: PostmanCollection
+  - url: https://github.com/tyntec/api-collection/tree/master/verify
+    type: SourceCode
+  description: >-
+    Network-grade number intelligence. HLR (Home Location Register) lookup via GNV
+    returns real-time subscriber reachability, roaming state, and serving /
+    original operator; Global Number Portability (GNP) resolves whether a number
+    has been ported and to which operator, for correct message and call routing.
+- aid: tyntec:tyntec-2fa-authentication-api
+  name: tyntec 2FA Authentication API
+  tags:
+  - Two-Factor Authentication
+  - OTP
+  - Number Verification
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.tyntec.com/reference/otp-authentication/current.html
+  baseURL: https://api.tyntec.com/2fa/v4
+  properties:
+  - url: https://www.tyntec.com/helpcenter/docs/
+    type: Documentation
+  - url: https://api.tyntec.com/reference/otp-authentication/current.html
+    type: APIReference
+  - url: https://github.com/tyntec/api-collection/tree/master/otp-authentication
+    type: SourceCode
+  description: >-
+    Programmatic two-factor authentication and one-time passwords. Send an OTP to
+    a recipient number (POST /otp), validate the code the user enters (POST
+    /otp/{otp-id}/validate returning VERIFIED, EXPIRED, WRONG_CODE, or
+    TOO_MANY_ATTEMPTS), and read, list, or delete OTP records.
+- aid: tyntec:tyntec-sms-api
+  name: tyntec SMS API
+  tags:
+  - SMS
+  - Messaging
+  - A2P
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.tyntec.com/reference/sms/current.html
+  baseURL: https://api.tyntec.com/messaging/v1
+  properties:
+  - url: https://www.tyntec.com/helpcenter/docs/
+    type: Documentation
+  - url: https://api.tyntec.com/reference/sms/current.html
+    type: APIReference
+  - url: https://github.com/tyntec/api-collection/tree/master/sms
+    type: SourceCode
+  description: >-
+    Send and receive text messages over tyntec's global A2P SMS network. Send via
+    POST /messaging/v1/sms, retrieve delivery status via GET
+    /messaging/v1/messages/{requestId}, receive inbound SMS by webhook, and report
+    delivery conversion events. Includes BYON (bring your own number) contact,
+    phone book, and number provisioning services.
+- aid: tyntec:tyntec-conversations-api
+  name: tyntec Conversations API
+  tags:
+  - WhatsApp
+  - Messaging
+  - Chat Apps
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://api.tyntec.com/reference/conversations/current.html
+  baseURL: https://api.tyntec.com/conversations/v3
+  properties:
+  - url: https://www.tyntec.com/helpcenter/docs/channels/whatsapp-business/introduction/
+    type: Documentation
+  - url: https://api.tyntec.com/reference/conversations/current.html
+    type: APIReference
+  - url: https://github.com/tyntec/api-collection/tree/master/conversations
+    type: SourceCode
+  description: >-
+    One API for WhatsApp Business, Viber, and SMS. Send single (POST /messages) or
+    bulk (POST /bulks) messages, track delivery status and events, upload and
+    manage media, configure WhatsApp accounts / templates / phone-number insights,
+    and receive inbound messages and status callbacks via webhooks. tyntec is an
+    authorized WhatsApp Business Solution Provider.
+common:
+- type: DomainSecurity
+  url: security/tyntec-domain-security.yml
+- type: Authentication
+  url: authentication/tyntec-authentication.yml
+- type: GitHubOrganization
+  url: https://github.com/tyntec
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tyntec
+- type: Website
+  url: https://www.tyntec.com
+- type: Documentation
+  url: https://api.tyntec.com/reference/
+- type: Plans
+  url: plans/tyntec-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/tyntec-rate-limits.yml
+- type: FinOps
+  url: finops/tyntec-finops.yml
+- url: https://www.tyntec.com/blog
+  type: Blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

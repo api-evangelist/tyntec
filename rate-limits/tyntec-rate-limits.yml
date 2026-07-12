@@ -1,0 +1,64 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: tyntec
+providerId: tyntec
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- CPaaS
+- SMS
+- WhatsApp
+- Number Verification
+- Rate Limiting
+- Quotas
+description: >-
+  tyntec does not publish fixed numeric per-second request limits for its public
+  REST APIs in the general reference. Throughput on the messaging surfaces (SMS
+  and Conversations) is governed primarily by carrier and channel constraints -
+  A2P SMS throughput allocated to your account and, for WhatsApp, the messaging
+  limits and quality rating that Meta assigns to your WhatsApp Business phone
+  number. Number verification and HLR lookups are metered per transaction against
+  account balance rather than a documented per-minute cap. Clients should handle
+  429 responses with backoff.
+notes: >-
+  Concrete numeric limits are account- and channel-specific and are not published
+  in the public reference as of the review date. WhatsApp messaging tiers (e.g.
+  1K / 10K / 100K / unlimited unique recipients per 24h) are set by Meta on the
+  business phone number, not by tyntec. Confirm allocations with tyntec support.
+sources:
+- https://api.tyntec.com/reference/
+- https://api.tyntec.com/reference/conversations/current.html
+- https://www.tyntec.com/helpcenter/docs/
+responseCodes:
+  throttled: 429
+limits:
+- name: REST API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented in the public API reference.
+- name: SMS Throughput
+  scope: account
+  metric: messages
+  limit: carrier / account allocated
+  notes: A2P SMS send rate depends on the throughput allocated to your account and destination network.
+- name: WhatsApp Messaging Limit
+  scope: phone_number
+  metric: unique_recipients
+  limit: Meta-assigned tier
+  notes: Meta sets the WhatsApp Business messaging tier and quality rating per phone number, not tyntec.
+- name: Number Verification / HLR Lookups
+  scope: account
+  metric: lookups
+  limit: metered per transaction
+  notes: Billed per lookup against account balance; no documented per-minute cap.
+policies:
+- name: Backoff Strategy
+  description: On HTTP 429, retry with exponential backoff and jitter.
+- name: Channel Compliance
+  description: WhatsApp and SMS traffic must comply with channel and carrier policy (opt-in, template approval for WhatsApp) or delivery is throttled or blocked.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

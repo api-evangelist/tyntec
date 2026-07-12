@@ -1,0 +1,102 @@
+aid: tyntec
+name: tyntec
+review:
+  question: Does tyntec expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. tyntec's public API surface
+    (api.tyntec.com) is request/response REST over HTTPS across every product -
+    Verify / Number Information, SMS, Conversations (WhatsApp / Viber / SMS), and
+    2FA. Asynchronous delivery notifications, inbound messages, and status
+    updates are delivered as server-to-endpoint HTTP webhook callbacks (HTTP
+    POST to a URL you configure), not over a WebSocket or SSE stream on tyntec's
+    own API. There is no server-push transport on tyntec's public API to model.
+findings:
+  summary: |
+    tyntec does not publish a documented public WebSocket API. tyntec is a CPaaS
+    provider whose APIs live under https://api.tyntec.com and authenticate with
+    an account API key in the `apikey` request header. All documented endpoints
+    are HTTPS REST. Asynchronous events - SMS delivery receipts, inbound
+    messages, WhatsApp/Viber message status - are delivered via HTTP webhook
+    callbacks to URLs the customer configures, i.e. server-to-endpoint HTTP
+    POST, not a client-held WebSocket (ws:// / wss://) connection. No realtime,
+    bidirectional, or streaming WebSocket endpoint is documented on any tyntec
+    product page or in the tyntec/api-collection OpenAPI specs as of the review
+    date.
+  publicApi: |
+    Yes - tyntec has a real, publicly documented API program. The reference is at
+    api.tyntec.com/reference and OpenAPI definitions are published openly in the
+    tyntec/api-collection GitHub repository (folders: verify, sms, conversations,
+    otp-authentication, silent-authentication, network-signals, voice, account).
+    Getting an API key requires a tyntec account; the docs and specs are public.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.tyntec.com
+      documented: true
+      note: All products (Verify, Number Information/NIS, SMS, Conversations, 2FA) are REST over HTTPS with an apikey header.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Inbound messages and delivery/status callbacks are POSTed to a customer-configured URL. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in any tyntec API reference or in the tyntec/api-collection specs as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.tyntec.com/verify/v1/phone/{number}
+    - GET    https://api.tyntec.com/verify/v1/templates
+    - POST   https://api.tyntec.com/verify/v1/templates
+    - GET    https://api.tyntec.com/verify/v1/templates/{criteriaTemplateName}
+    - PUT    https://api.tyntec.com/verify/v1/templates/{criteriaTemplateName}
+    - DELETE https://api.tyntec.com/verify/v1/templates/{criteriaTemplateName}
+    - GET    https://api.tyntec.com/nis/v1/gnv
+    - GET    https://api.tyntec.com/nis/v1/gnp
+    - POST   https://api.tyntec.com/2fa/v4/otp
+    - GET    https://api.tyntec.com/2fa/v4/otp
+    - GET    https://api.tyntec.com/2fa/v4/otp/{otp-id}
+    - POST   https://api.tyntec.com/2fa/v4/otp/{otp-id}/validate
+    - DELETE https://api.tyntec.com/2fa/v4/otp/{otp-id}
+    - POST   https://api.tyntec.com/messaging/v1/sms
+    - GET    https://api.tyntec.com/messaging/v1/sms
+    - GET    https://api.tyntec.com/messaging/v1/messages/{requestId}
+    - POST   https://api.tyntec.com/messaging/v1/conversion
+    - POST   https://api.tyntec.com/conversations/v3/messages
+    - POST   https://api.tyntec.com/conversations/v3/bulks
+    - GET    https://api.tyntec.com/conversations/v3/messages/{messageId}/status
+    - GET    https://api.tyntec.com/conversations/v3/messages/{messageId}/events
+    - GET    https://api.tyntec.com/conversations/v3/media
+    - POST   https://api.tyntec.com/conversations/v3/media
+    - GET    https://api.tyntec.com/conversations/v3/channels
+sources:
+  - url: https://api.tyntec.com/reference/
+    type: Documentation
+    note: Product index; all APIs are REST under https://api.tyntec.com with an apikey header. No WebSocket mentioned.
+  - url: https://api.tyntec.com/reference/verify/current.html
+    type: APIReference
+    note: Verify API - GET /verify/v1/phone/{number} plus template CRUD; also references NIS GNV (HLR) and GNP (portability).
+  - url: https://api.tyntec.com/reference/sms/current.html
+    type: APIReference
+    note: SMS API under /messaging/v1; inbound via webhook. All REST.
+  - url: https://api.tyntec.com/reference/conversations/current.html
+    type: APIReference
+    note: Conversations API under /conversations/v3 (WhatsApp/Viber/SMS); status and inbound via webhooks, not WebSocket.
+  - url: https://api.tyntec.com/reference/otp-authentication/current.html
+    type: APIReference
+    note: 2FA/OTP API under /2fa/v4. All REST.
+  - url: https://github.com/tyntec/api-collection
+    type: SourceCode
+    note: Public OpenAPI definitions for all tyntec products; no WebSocket/AsyncAPI surface published.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. tyntec's public API is
+    request/response REST across all products, with asynchronous events
+    delivered by outbound HTTP webhook callbacks to customer-configured URLs. No
+    AsyncAPI document was created because there is no server-push transport
+    (WebSocket or SSE) on tyntec's own API to model; webhook callbacks are
+    server-to-endpoint HTTP and are documented as such.

@@ -1,0 +1,31 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.tyntec.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  4 13:32:03 2026 GMT
+  hsts: false
+  http_status: 200
+- host: api.tyntec.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 16 13:16:59 2027 GMT
+  hsts: true
+  hsts_max_age: 15552000
+  hsts_include_subdomains: true
+  http_status: 404
+  note: Root of api host returns 404; documented API paths (e.g. /verify/v1, /messaging/v1) are the live surface.
+- host: tyntec.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 16 13:16:59 2027 GMT
+  http_status: 301
+  note: Redirects to www.tyntec.com.
+domains:
+- domain: tyntec.com
+  dmarc: true
+  dmarc_policy: reject
+  spf: true
+  spf_record: v=spf1 mx include:aspmx.pardot.com -all

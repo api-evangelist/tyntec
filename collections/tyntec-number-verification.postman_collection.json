@@ -1,0 +1,127 @@
+{
+  "info": {
+    "name": "tyntec Phone Number Intelligence API",
+    "description": "Number verification and number information (HLR + portability) surface of the tyntec CPaaS platform. Verify a phone number against reusable criteria templates before saving it to a CRM, messaging, or calling it. Base URL: https://api.tyntec.com. All requests authenticate with an account API key sent in the `apikey` header. Paths grounded in tyntec's public reference (api.tyntec.com/reference) and the tyntec/api-collection specs; request bodies are modeled.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "apikey", "type": "string" },
+      { "key": "value", "value": "{{apikey}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.tyntec.com", "type": "string" },
+    { "key": "apikey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Number Verification",
+      "item": [
+        {
+          "name": "Verify a phone number",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/verify/v1/phone/491701234567?criteria=default-mobile",
+              "host": ["{{baseUrl}}"],
+              "path": ["verify", "v1", "phone", "491701234567"],
+              "query": [
+                { "key": "criteria", "value": "default-mobile" }
+              ]
+            },
+            "description": "Validates a phone number against a named criteria template and returns the underlying number intelligence (validity, reachability, line type, operator, country, disposable flag)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Verify Templates",
+      "item": [
+        {
+          "name": "List criteria templates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/verify/v1/templates", "host": ["{{baseUrl}}"], "path": ["verify", "v1", "templates"] },
+            "description": "Returns all verify criteria templates for the account."
+          }
+        },
+        {
+          "name": "Create a criteria template",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\"mobile\"],\n  \"requireReachable\": true,\n  \"rejectDisposable\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/verify/v1/templates", "host": ["{{baseUrl}}"], "path": ["verify", "v1", "templates"] },
+            "description": "Creates a new verify criteria template."
+          }
+        },
+        {
+          "name": "Get a criteria template",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/verify/v1/templates/default-mobile", "host": ["{{baseUrl}}"], "path": ["verify", "v1", "templates", "default-mobile"] },
+            "description": "Returns a single criteria template by name."
+          }
+        },
+        {
+          "name": "Update a criteria template",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\"mobile\"],\n  \"requireReachable\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/verify/v1/templates/default-mobile", "host": ["{{baseUrl}}"], "path": ["verify", "v1", "templates", "default-mobile"] },
+            "description": "Replaces the definition of an existing criteria template."
+          }
+        },
+        {
+          "name": "Delete a criteria template",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/verify/v1/templates/default-mobile", "host": ["{{baseUrl}}"], "path": ["verify", "v1", "templates", "default-mobile"] },
+            "description": "Deletes a criteria template by name."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Number Information",
+      "item": [
+        {
+          "name": "HLR lookup (GNV)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/nis/v1/gnv?msisdn=491701234567",
+              "host": ["{{baseUrl}}"],
+              "path": ["nis", "v1", "gnv"],
+              "query": [ { "key": "msisdn", "value": "491701234567" } ]
+            },
+            "description": "Real-time HLR reachability and roaming lookup for a mobile number."
+          }
+        },
+        {
+          "name": "Number portability lookup (GNP)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/nis/v1/gnp?msisdn=491701234567",
+              "host": ["{{baseUrl}}"],
+              "path": ["nis", "v1", "gnp"],
+              "query": [ { "key": "msisdn", "value": "491701234567" } ]
+            },
+            "description": "Resolves whether a number has been ported and to which operator."
+          }
+        }
+      ]
+    }
+  ]
+}

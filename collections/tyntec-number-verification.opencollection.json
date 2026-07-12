@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "tyntec Phone Number Intelligence API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "apikey",
+        "value": "{{apikey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Number Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Verify a phone number", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/phone/:number?criteria=default-mobile",
+            "params": [
+              { "name": "number", "value": "491701234567", "type": "path", "description": "Number in E.164 without leading +." },
+              { "name": "criteria", "value": "default-mobile", "type": "query", "description": "Criteria template name." }
+            ]
+          },
+          "docs": "Validates a phone number against a named criteria template and returns the underlying number intelligence."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Verify Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List criteria templates", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tyntec.com/verify/v1/templates" },
+          "docs": "Returns all verify criteria templates for the account."
+        },
+        {
+          "info": { "name": "Create a criteria template", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tyntec.com/verify/v1/templates",
+            "body": { "type": "json", "data": "{\"name\":\"default-mobile\",\"allowedNumberTypes\":[\"mobile\"],\"requireReachable\":true,\"rejectDisposable\":true}" }
+          },
+          "docs": "Creates a new verify criteria template."
+        },
+        {
+          "info": { "name": "Get a criteria template", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/templates/:criteriaTemplateName",
+            "params": [
+              { "name": "criteriaTemplateName", "value": "default-mobile", "type": "path", "description": "The template name." }
+            ]
+          },
+          "docs": "Returns a single criteria template by name."
+        },
+        {
+          "info": { "name": "Update a criteria template", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tyntec.com/verify/v1/templates/:criteriaTemplateName",
+            "params": [
+              { "name": "criteriaTemplateName", "value": "default-mobile", "type": "path", "description": "The template name." }
+            ],
+            "body": { "type": "json", "data": "{\"name\":\"default-mobile\",\"allowedNumberTypes\":[\"mobile\"],\"requireReachable\":true}" }
+          },
+          "docs": "Replaces the definition of an existing criteria template."
+        },
+        {
+          "info": { "name": "Delete a criteria template", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tyntec.com/verify/v1/templates/:criteriaTemplateName",
+            "params": [
+              { "name": "criteriaTemplateName", "value": "default-mobile", "type": "path", "description": "The template name." }
+            ]
+          },
+          "docs": "Deletes a criteria template by name."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Number Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "HLR lookup (GNV)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/nis/v1/gnv?msisdn=491701234567",
+            "params": [
+              { "name": "msisdn", "value": "491701234567", "type": "query", "description": "Number in E.164 format." }
+            ]
+          },
+          "docs": "Real-time HLR reachability and roaming lookup for a mobile number."
+        },
+        {
+          "info": { "name": "Number portability lookup (GNP)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/nis/v1/gnp?msisdn=491701234567",
+            "params": [
+              { "name": "msisdn", "value": "491701234567", "type": "query", "description": "Number in E.164 format." }
+            ]
+          },
+          "docs": "Resolves whether a number has been ported and to which operator."
+        }
+      ]
+    }
+  ]
+}

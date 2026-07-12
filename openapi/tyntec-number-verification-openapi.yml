@@ -1,0 +1,401 @@
+openapi: 3.0.3
+info:
+  title: tyntec Phone Number Intelligence API
+  description: >-
+    Phone number intelligence surface of the tyntec CPaaS platform, grouping the
+    number-verification and number-information services that answer the question
+    "is this phone number real, reachable, and what network is it on?" before you
+    save it in a CRM, message it, or call it. It combines two live tyntec
+    products under one apikey-authenticated REST surface:
+
+    - The Verify API (base path /verify/v1) lets you define reusable criteria
+      templates and validate a phone number against them - number format /
+      validity, active subscriber (reachability) status, line type
+      (mobile / fixed / VoIP), operator / carrier, country of origin, MCC/MNC,
+      and disposable-number detection.
+
+    - The Number Information Services (base path /nis/v1) provide global network
+      lookups: HLR (Home Location Register) real-time reachability and roaming
+      state via GNV, and Global Number Portability (GNP) to resolve the operator
+      a number has been ported to.
+
+    All requests authenticate with an account API key sent in the `apikey`
+    request header. Endpoints and paths below are grounded in tyntec's public API
+    reference (api.tyntec.com/reference) and the tyntec/api-collection OpenAPI
+    definitions; request/response schemas here are modeled from that
+    documentation and simplified for cataloging - consult the live reference for
+    exhaustive field-level detail.
+  version: '1.0'
+  contact:
+    name: tyntec
+    url: https://www.tyntec.com
+  x-modeled: >-
+    Paths, methods, base paths, and the apikey auth scheme are grounded in
+    tyntec's public documentation. JSON schema bodies are honestly modeled from
+    the docs and may not enumerate every property.
+servers:
+  - url: https://api.tyntec.com
+    description: tyntec production API
+security:
+  - apiKeyAuth: []
+tags:
+  - name: Number Verification
+    description: Validate a phone number against reusable criteria templates (Verify API).
+  - name: Verify Templates
+    description: Create and manage the criteria templates numbers are checked against.
+  - name: Number Information
+    description: HLR reachability/roaming and global number portability lookups (NIS).
+  - name: Service
+    description: Health and version metadata.
+paths:
+  /verify/v1/phone/{number}:
+    get:
+      operationId: verifyPhoneNumber
+      tags:
+        - Number Verification
+      summary: Verify a phone number
+      description: >-
+        Validates the given phone number (E.164, without a leading +) against a
+        named criteria template. Returns whether the number passes, plus the
+        underlying number intelligence used to decide - validity, reachability
+        (active subscriber), line type, operator, country, MCC/MNC, and
+        disposable-number flags.
+      parameters:
+        - name: number
+          in: path
+          required: true
+          description: The phone number to verify, in international E.164 format without the leading plus.
+          schema:
+            type: string
+            example: '491701234567'
+        - name: criteria
+          in: query
+          required: false
+          description: Name of a previously created criteria template to evaluate the number against.
+          schema:
+            type: string
+            example: default-mobile
+      responses:
+        '200':
+          description: The verification result for the number.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /verify/v1/templates:
+    get:
+      operationId: listVerifyTemplates
+      tags:
+        - Verify Templates
+      summary: List criteria templates
+      description: Returns all verify criteria templates defined for the account.
+      responses:
+        '200':
+          description: A list of criteria templates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CriteriaTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createVerifyTemplate
+      tags:
+        - Verify Templates
+      summary: Create a criteria template
+      description: Creates a new verify criteria template describing the conditions a number must satisfy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriteriaTemplate'
+      responses:
+        '201':
+          description: The created criteria template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriteriaTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /verify/v1/templates/{criteriaTemplateName}:
+    parameters:
+      - name: criteriaTemplateName
+        in: path
+        required: true
+        description: The name of the criteria template.
+        schema:
+          type: string
+    get:
+      operationId: getVerifyTemplate
+      tags:
+        - Verify Templates
+      summary: Get a criteria template
+      description: Returns a single criteria template by name.
+      responses:
+        '200':
+          description: The requested criteria template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriteriaTemplate'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateVerifyTemplate
+      tags:
+        - Verify Templates
+      summary: Update a criteria template
+      description: Replaces the definition of an existing criteria template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriteriaTemplate'
+      responses:
+        '200':
+          description: The updated criteria template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriteriaTemplate'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteVerifyTemplate
+      tags:
+        - Verify Templates
+      summary: Delete a criteria template
+      description: Deletes a criteria template by name.
+      responses:
+        '204':
+          description: The template was deleted.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /nis/v1/gnv:
+    get:
+      operationId: hlrLookup
+      tags:
+        - Number Information
+      summary: HLR lookup (Global Number Verification)
+      description: >-
+        Real-time HLR (Home Location Register) lookup for a mobile number.
+        Returns current reachability (whether the subscriber is present on the
+        network), the serving and original operator, roaming state, and
+        MCC/MNC / IMSI-derived network data.
+      parameters:
+        - name: msisdn
+          in: query
+          required: true
+          description: The mobile number to look up, in international E.164 format.
+          schema:
+            type: string
+            example: '491701234567'
+      responses:
+        '200':
+          description: HLR lookup result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HlrResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /nis/v1/gnp:
+    get:
+      operationId: numberPortabilityLookup
+      tags:
+        - Number Information
+      summary: Global number portability lookup
+      description: >-
+        Resolves whether a mobile number has been ported to a different operator
+        and returns the current operator (MCC/MNC) so messages and calls are
+        routed correctly.
+      parameters:
+        - name: msisdn
+          in: query
+          required: true
+          description: The mobile number to check, in international E.164 format.
+          schema:
+            type: string
+            example: '491701234567'
+      responses:
+        '200':
+          description: Number portability result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortabilityResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /verify/v1/health:
+    get:
+      operationId: verifyHealth
+      tags:
+        - Service
+      summary: Service health
+      description: Returns the health status of the Verify service.
+      responses:
+        '200':
+          description: Service is healthy.
+  /verify/v1/version:
+    get:
+      operationId: verifyVersion
+      tags:
+        - Service
+      summary: Service version
+      description: Returns the deployed version of the Verify service.
+      responses:
+        '200':
+          description: Service version metadata.
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+      description: >-
+        Account API key created in the tyntec Console. Sent in the `apikey`
+        request header on every call.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    VerificationResult:
+      type: object
+      description: Result of validating a number against a criteria template.
+      properties:
+        number:
+          type: string
+          description: The number that was verified, in E.164 format.
+        valid:
+          type: boolean
+          description: Whether the number is a validly formatted, dialable number.
+        passed:
+          type: boolean
+          description: Whether the number satisfied the supplied criteria template.
+        reachable:
+          type: boolean
+          description: Whether the subscriber is currently an active, reachable subscriber.
+        numberType:
+          type: string
+          description: The line type of the number.
+          enum:
+            - mobile
+            - fixed
+            - voip
+            - unknown
+        disposable:
+          type: boolean
+          description: Whether the number appears to be a disposable / temporary number.
+        countryCode:
+          type: string
+          description: ISO country code of the number's country of origin.
+          example: DE
+        operator:
+          type: string
+          description: Name of the current mobile operator.
+          example: Telekom Deutschland
+        mcc:
+          type: string
+          description: Mobile Country Code.
+        mnc:
+          type: string
+          description: Mobile Network Code.
+    CriteriaTemplate:
+      type: object
+      description: A reusable set of conditions a number must satisfy to pass verification.
+      properties:
+        name:
+          type: string
+          description: Unique name of the criteria template.
+          example: default-mobile
+        allowedNumberTypes:
+          type: array
+          description: Line types the number is allowed to be.
+          items:
+            type: string
+            enum:
+              - mobile
+              - fixed
+              - voip
+        allowedCountries:
+          type: array
+          description: ISO country codes the number is allowed to originate from.
+          items:
+            type: string
+        requireReachable:
+          type: boolean
+          description: Require the subscriber to be active/reachable to pass.
+        rejectDisposable:
+          type: boolean
+          description: Reject disposable / temporary numbers.
+      required:
+        - name
+    HlrResult:
+      type: object
+      description: Real-time HLR reachability and network data for a mobile number.
+      properties:
+        msisdn:
+          type: string
+        status:
+          type: string
+          description: Subscriber presence/reachability status.
+          enum:
+            - reachable
+            - unreachable
+            - unknown
+        roaming:
+          type: boolean
+          description: Whether the subscriber is currently roaming.
+        currentOperator:
+          type: string
+        originalOperator:
+          type: string
+        mcc:
+          type: string
+        mnc:
+          type: string
+        countryCode:
+          type: string
+    PortabilityResult:
+      type: object
+      description: Whether a number has been ported and to which operator.
+      properties:
+        msisdn:
+          type: string
+        ported:
+          type: boolean
+        currentOperator:
+          type: string
+        mcc:
+          type: string
+        mnc:
+          type: string
+    Problem:
+      type: object
+      description: Error response.
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string

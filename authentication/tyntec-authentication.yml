@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/tyntec-number-verification-openapi.yml
+summary:
+  types:
+  - apiKey
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameterName: apikey
+  description: >-
+    All tyntec APIs (Verify / Number Information, SMS, Conversations / WhatsApp,
+    and 2FA) authenticate with an account API key created in the tyntec Console
+    and sent in the `apikey` request header on every call. The Verify API
+    reference documents the same key as `apiKey`; the header is case-insensitive.
+    There is no OAuth or Bearer flow on tyntec's public REST APIs.
+  sources:
+  - openapi/tyntec-number-verification-openapi.yml
+  - https://api.tyntec.com/reference/verify/current.html
+  - https://api.tyntec.com/reference/sms/current.html
+  - https://api.tyntec.com/reference/conversations/current.html
