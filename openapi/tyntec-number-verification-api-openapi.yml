@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: tyntec Phone Number Intelligence Number Information Number Verification API
+  description: "Phone number intelligence surface of the tyntec CPaaS platform, grouping the number-verification and number-information services that answer the question \"is this phone number real, reachable, and what network is it on?\" before you save it in a CRM, message it, or call it. It combines two live tyntec products under one apikey-authenticated REST surface:\n- The Verify API (base path /verify/v1) lets you define reusable criteria\n  templates and validate a phone number against them - number format /\n  validity, active subscriber (reachability) status, line type\n  (mobile / fixed / VoIP), operator / carrier, country of origin, MCC/MNC,\n  and disposable-number detection.\n\n- The Number Information Services (base path /nis/v1) provide global network\n  lookups: HLR (Home Location Register) real-time reachability and roaming\n  state via GNV, and Global Number Portability (GNP) to resolve the operator\n  a number has been ported to.\n\nAll requests authenticate with an account API key sent in the `apikey` request header. Endpoints and paths below are grounded in tyntec's public API reference (api.tyntec.com/reference) and the tyntec/api-collection OpenAPI definitions; request/response schemas here are modeled from that documentation and simplified for cataloging - consult the live reference for exhaustive field-level detail."
+  version: '1.0'
+  contact:
+    name: tyntec
+    url: https://www.tyntec.com
+  x-modeled: Paths, methods, base paths, and the apikey auth scheme are grounded in tyntec's public documentation. JSON schema bodies are honestly modeled from the docs and may not enumerate every property.
+servers:
+- url: https://api.tyntec.com
+  description: tyntec production API
+security:
+- apiKeyAuth: []
+tags:
+- name: Number Verification
+  description: Validate a phone number against reusable criteria templates (Verify API).
+paths:
+  /verify/v1/phone/{number}:
+    get:
+      operationId: verifyPhoneNumber
+      tags:
+      - Number Verification
+      summary: Verify a phone number
+      description: Validates the given phone number (E.164, without a leading +) against a named criteria template. Returns whether the number passes, plus the underlying number intelligence used to decide - validity, reachability (active subscriber), line type, operator, country, MCC/MNC, and disposable-number flags.
+      parameters:
+      - name: number
+        in: path
+        required: true
+        description: The phone number to verify, in international E.164 format without the leading plus.
+        schema:
+          type: string
+          example: '491701234567'
+      - name: criteria
+        in: query
+        required: false
+        description: Name of a previously created criteria template to evaluate the number against.
+        schema:
+          type: string
+          example: default-mobile
+      responses:
+        '200':
+          description: The verification result for the number.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Problem:
+      type: object
+      description: Error response.
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    VerificationResult:
+      type: object
+      description: Result of validating a number against a criteria template.
+      properties:
+        number:
+          type: string
+          description: The number that was verified, in E.164 format.
+        valid:
+          type: boolean
+          description: Whether the number is a validly formatted, dialable number.
+        passed:
+          type: boolean
+          description: Whether the number satisfied the supplied criteria template.
+        reachable:
+          type: boolean
+          description: Whether the subscriber is currently an active, reachable subscriber.
+        numberType:
+          type: string
+          description: The line type of the number.
+          enum:
+          - mobile
+          - fixed
+          - voip
+          - unknown
+        disposable:
+          type: boolean
+          description: Whether the number appears to be a disposable / temporary number.
+        countryCode:
+          type: string
+          description: ISO country code of the number's country of origin.
+          example: DE
+        operator:
+          type: string
+          description: Name of the current mobile operator.
+          example: Telekom Deutschland
+        mcc:
+          type: string
+          description: Mobile Country Code.
+        mnc:
+          type: string
+          description: Mobile Network Code.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+      description: Account API key created in the tyntec Console. Sent in the `apikey` request header on every call.

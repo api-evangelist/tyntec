@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: tyntec Phone Number Intelligence Number Information API
+  description: "Phone number intelligence surface of the tyntec CPaaS platform, grouping the number-verification and number-information services that answer the question \"is this phone number real, reachable, and what network is it on?\" before you save it in a CRM, message it, or call it. It combines two live tyntec products under one apikey-authenticated REST surface:\n- The Verify API (base path /verify/v1) lets you define reusable criteria\n  templates and validate a phone number against them - number format /\n  validity, active subscriber (reachability) status, line type\n  (mobile / fixed / VoIP), operator / carrier, country of origin, MCC/MNC,\n  and disposable-number detection.\n\n- The Number Information Services (base path /nis/v1) provide global network\n  lookups: HLR (Home Location Register) real-time reachability and roaming\n  state via GNV, and Global Number Portability (GNP) to resolve the operator\n  a number has been ported to.\n\nAll requests authenticate with an account API key sent in the `apikey` request header. Endpoints and paths below are grounded in tyntec's public API reference (api.tyntec.com/reference) and the tyntec/api-collection OpenAPI definitions; request/response schemas here are modeled from that documentation and simplified for cataloging - consult the live reference for exhaustive field-level detail."
+  version: '1.0'
+  contact:
+    name: tyntec
+    url: https://www.tyntec.com
+  x-modeled: Paths, methods, base paths, and the apikey auth scheme are grounded in tyntec's public documentation. JSON schema bodies are honestly modeled from the docs and may not enumerate every property.
+servers:
+- url: https://api.tyntec.com
+  description: tyntec production API
+security:
+- apiKeyAuth: []
+tags:
+- name: Number Information
+  description: HLR reachability/roaming and global number portability lookups (NIS).
+paths:
+  /nis/v1/gnv:
+    get:
+      operationId: hlrLookup
+      tags:
+      - Number Information
+      summary: HLR lookup (Global Number Verification)
+      description: Real-time HLR (Home Location Register) lookup for a mobile number. Returns current reachability (whether the subscriber is present on the network), the serving and original operator, roaming state, and MCC/MNC / IMSI-derived network data.
+      parameters:
+      - name: msisdn
+        in: query
+        required: true
+        description: The mobile number to look up, in international E.164 format.
+        schema:
+          type: string
+          example: '491701234567'
+      responses:
+        '200':
+          description: HLR lookup result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HlrResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /nis/v1/gnp:
+    get:
+      operationId: numberPortabilityLookup
+      tags:
+      - Number Information
+      summary: Global number portability lookup
+      description: Resolves whether a mobile number has been ported to a different operator and returns the current operator (MCC/MNC) so messages and calls are routed correctly.
+      parameters:
+      - name: msisdn
+        in: query
+        required: true
+        description: The mobile number to check, in international E.164 format.
+        schema:
+          type: string
+          example: '491701234567'
+      responses:
+        '200':
+          description: Number portability result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortabilityResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    HlrResult:
+      type: object
+      description: Real-time HLR reachability and network data for a mobile number.
+      properties:
+        msisdn:
+          type: string
+        status:
+          type: string
+          description: Subscriber presence/reachability status.
+          enum:
+          - reachable
+          - unreachable
+          - unknown
+        roaming:
+          type: boolean
+          description: Whether the subscriber is currently roaming.
+        currentOperator:
+          type: string
+        originalOperator:
+          type: string
+        mcc:
+          type: string
+        mnc:
+          type: string
+        countryCode:
+          type: string
+    Problem:
+      type: object
+      description: Error response.
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    PortabilityResult:
+      type: object
+      description: Whether a number has been ported and to which operator.
+      properties:
+        msisdn:
+          type: string
+        ported:
+          type: boolean
+        currentOperator:
+          type: string
+        mcc:
+          type: string
+        mnc:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+      description: Account API key created in the tyntec Console. Sent in the `apikey` request header on every call.

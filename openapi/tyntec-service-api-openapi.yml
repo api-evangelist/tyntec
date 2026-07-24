@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: tyntec Phone Number Intelligence Number Information Service API
+  description: "Phone number intelligence surface of the tyntec CPaaS platform, grouping the number-verification and number-information services that answer the question \"is this phone number real, reachable, and what network is it on?\" before you save it in a CRM, message it, or call it. It combines two live tyntec products under one apikey-authenticated REST surface:\n- The Verify API (base path /verify/v1) lets you define reusable criteria\n  templates and validate a phone number against them - number format /\n  validity, active subscriber (reachability) status, line type\n  (mobile / fixed / VoIP), operator / carrier, country of origin, MCC/MNC,\n  and disposable-number detection.\n\n- The Number Information Services (base path /nis/v1) provide global network\n  lookups: HLR (Home Location Register) real-time reachability and roaming\n  state via GNV, and Global Number Portability (GNP) to resolve the operator\n  a number has been ported to.\n\nAll requests authenticate with an account API key sent in the `apikey` request header. Endpoints and paths below are grounded in tyntec's public API reference (api.tyntec.com/reference) and the tyntec/api-collection OpenAPI definitions; request/response schemas here are modeled from that documentation and simplified for cataloging - consult the live reference for exhaustive field-level detail."
+  version: '1.0'
+  contact:
+    name: tyntec
+    url: https://www.tyntec.com
+  x-modeled: Paths, methods, base paths, and the apikey auth scheme are grounded in tyntec's public documentation. JSON schema bodies are honestly modeled from the docs and may not enumerate every property.
+servers:
+- url: https://api.tyntec.com
+  description: tyntec production API
+security:
+- apiKeyAuth: []
+tags:
+- name: Service
+  description: Health and version metadata.
+paths:
+  /verify/v1/health:
+    get:
+      operationId: verifyHealth
+      tags:
+      - Service
+      summary: Service health
+      description: Returns the health status of the Verify service.
+      responses:
+        '200':
+          description: Service is healthy.
+  /verify/v1/version:
+    get:
+      operationId: verifyVersion
+      tags:
+      - Service
+      summary: Service version
+      description: Returns the deployed version of the Verify service.
+      responses:
+        '200':
+          description: Service version metadata.
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+      description: Account API key created in the tyntec Console. Sent in the `apikey` request header on every call.

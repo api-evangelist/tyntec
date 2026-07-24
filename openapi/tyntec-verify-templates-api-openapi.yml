@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: tyntec Phone Number Intelligence Number Information Verify Templates API
+  description: "Phone number intelligence surface of the tyntec CPaaS platform, grouping the number-verification and number-information services that answer the question \"is this phone number real, reachable, and what network is it on?\" before you save it in a CRM, message it, or call it. It combines two live tyntec products under one apikey-authenticated REST surface:\n- The Verify API (base path /verify/v1) lets you define reusable criteria\n  templates and validate a phone number against them - number format /\n  validity, active subscriber (reachability) status, line type\n  (mobile / fixed / VoIP), operator / carrier, country of origin, MCC/MNC,\n  and disposable-number detection.\n\n- The Number Information Services (base path /nis/v1) provide global network\n  lookups: HLR (Home Location Register) real-time reachability and roaming\n  state via GNV, and Global Number Portability (GNP) to resolve the operator\n  a number has been ported to.\n\nAll requests authenticate with an account API key sent in the `apikey` request header. Endpoints and paths below are grounded in tyntec's public API reference (api.tyntec.com/reference) and the tyntec/api-collection OpenAPI definitions; request/response schemas here are modeled from that documentation and simplified for cataloging - consult the live reference for exhaustive field-level detail."
+  version: '1.0'
+  contact:
+    name: tyntec
+    url: https://www.tyntec.com
+  x-modeled: Paths, methods, base paths, and the apikey auth scheme are grounded in tyntec's public documentation. JSON schema bodies are honestly modeled from the docs and may not enumerate every property.
+servers:
+- url: https://api.tyntec.com
+  description: tyntec production API
+security:
+- apiKeyAuth: []
+tags:
+- name: Verify Templates
+  description: Create and manage the criteria templates numbers are checked against.
+paths:
+  /verify/v1/templates:
+    get:
+      operationId: listVerifyTemplates
+      tags:
+      - Verify Templates
+      summary: List criteria templates
+      description: Returns all verify criteria templates defined for the account.
+      responses:
+        '200':
+          description: A list of criteria templates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CriteriaTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createVerifyTemplate
+      tags:
+      - Verify Templates
+      summary: Create a criteria template
+      description: Creates a new verify criteria template describing the conditions a number must satisfy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriteriaTemplate'
+      responses:
+        '201':
+          description: The created criteria template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriteriaTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /verify/v1/templates/{criteriaTemplateName}:
+    parameters:
+    - name: criteriaTemplateName
+      in: path
+      required: true
+      description: The name of the criteria template.
+      schema:
+        type: string
+    get:
+      operationId: getVerifyTemplate
+      tags:
+      - Verify Templates
+      summary: Get a criteria template
+      description: Returns a single criteria template by name.
+      responses:
+        '200':
+          description: The requested criteria template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriteriaTemplate'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateVerifyTemplate
+      tags:
+      - Verify Templates
+      summary: Update a criteria template
+      description: Replaces the definition of an existing criteria template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriteriaTemplate'
+      responses:
+        '200':
+          description: The updated criteria template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriteriaTemplate'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteVerifyTemplate
+      tags:
+      - Verify Templates
+      summary: Delete a criteria template
+      description: Deletes a criteria template by name.
+      responses:
+        '204':
+          description: The template was deleted.
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    CriteriaTemplate:
+      type: object
+      description: A reusable set of conditions a number must satisfy to pass verification.
+      properties:
+        name:
+          type: string
+          description: Unique name of the criteria template.
+          example: default-mobile
+        allowedNumberTypes:
+          type: array
+          description: Line types the number is allowed to be.
+          items:
+            type: string
+            enum:
+            - mobile
+            - fixed
+            - voip
+        allowedCountries:
+          type: array
+          description: ISO country codes the number is allowed to originate from.
+          items:
+            type: string
+        requireReachable:
+          type: boolean
+          description: Require the subscriber to be active/reachable to pass.
+        rejectDisposable:
+          type: boolean
+          description: Reject disposable / temporary numbers.
+      required:
+      - name
+    Problem:
+      type: object
+      description: Error response.
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+      description: Account API key created in the tyntec Console. Sent in the `apikey` request header on every call.
