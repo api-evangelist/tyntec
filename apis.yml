@@ -12,7 +12,20 @@ description: >-
   is an authorized WhatsApp Business Solution Provider. All APIs authenticate with
   an account API key sent in the apikey request header; tyntec publishes OpenAPI
   definitions for them in the public tyntec/api-collection GitHub repository.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tyntec.png
 tags:
 - Number Verification
 - CPaaS
@@ -28,59 +41,6 @@ created: '2026-07-11'
 modified: '2026-07-11'
 specificationVersion: '0.19'
 apis:
-- aid: tyntec:tyntec-number-verification-api
-  name: tyntec Number Verification API
-  tags:
-  - Number Verification
-  - Phone Number Intelligence
-  - Validation
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.tyntec.com/reference/verify/current.html
-  baseURL: https://api.tyntec.com/verify/v1
-  properties:
-  - url: https://www.tyntec.com/helpcenter/docs/
-    type: Documentation
-  - url: https://api.tyntec.com/reference/verify/current.html
-    type: APIReference
-  - url: openapi/tyntec-number-verification-openapi.yml
-    type: OpenAPI
-  - url: collections/tyntec-number-verification.postman_collection.json
-    type: PostmanCollection
-  - url: collections/tyntec-number-verification.opencollection.json
-    type: OpenCollection
-  - url: https://github.com/tyntec/api-collection/tree/master/verify
-    type: SourceCode
-  description: >-
-    Verify a phone number before saving it to a CRM, messaging it, or calling it.
-    Define reusable criteria templates (allowed line types, countries, reachable
-    subscriber required, reject disposable numbers) and validate any number
-    against them, returning validity, active-subscriber reachability, line type,
-    operator, country of origin, MCC/MNC, and disposable-number detection.
-- aid: tyntec:tyntec-number-information-api
-  name: tyntec Number Information API
-  tags:
-  - HLR Lookup
-  - Number Portability
-  - Phone Number Intelligence
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.tyntec.com/reference/verify/current.html
-  baseURL: https://api.tyntec.com/nis/v1
-  properties:
-  - url: https://www.tyntec.com/helpcenter/docs/
-    type: Documentation
-  - url: https://api.tyntec.com/reference/verify/current.html
-    type: APIReference
-  - url: openapi/tyntec-number-verification-openapi.yml
-    type: OpenAPI
-  - url: collections/tyntec-number-verification.postman_collection.json
-    type: PostmanCollection
-  - url: https://github.com/tyntec/api-collection/tree/master/verify
-    type: SourceCode
-  description: >-
-    Network-grade number intelligence. HLR (Home Location Register) lookup via GNV
-    returns real-time subscriber reachability, roaming state, and serving /
-    original operator; Global Number Portability (GNP) resolves whether a number
-    has been ported and to which operator, for correct message and call routing.
 - aid: tyntec:tyntec-2fa-authentication-api
   name: tyntec 2FA Authentication API
   tags:
@@ -98,10 +58,9 @@ apis:
   - url: https://github.com/tyntec/api-collection/tree/master/otp-authentication
     type: SourceCode
   description: >-
-    Programmatic two-factor authentication and one-time passwords. Send an OTP to
-    a recipient number (POST /otp), validate the code the user enters (POST
-    /otp/{otp-id}/validate returning VERIFIED, EXPIRED, WRONG_CODE, or
-    TOO_MANY_ATTEMPTS), and read, list, or delete OTP records.
+    Programmatic two-factor authentication and one-time passwords. Send an OTP to a recipient number (POST
+    /otp), validate the code the user enters (POST /otp/{otp-id}/validate returning VERIFIED, EXPIRED,
+    WRONG_CODE, or TOO_MANY_ATTEMPTS), and read, list, or delete OTP records.
 - aid: tyntec:tyntec-sms-api
   name: tyntec SMS API
   tags:
@@ -119,11 +78,10 @@ apis:
   - url: https://github.com/tyntec/api-collection/tree/master/sms
     type: SourceCode
   description: >-
-    Send and receive text messages over tyntec's global A2P SMS network. Send via
-    POST /messaging/v1/sms, retrieve delivery status via GET
-    /messaging/v1/messages/{requestId}, receive inbound SMS by webhook, and report
-    delivery conversion events. Includes BYON (bring your own number) contact,
-    phone book, and number provisioning services.
+    Send and receive text messages over tyntec's global A2P SMS network. Send via POST /messaging/v1/sms,
+    retrieve delivery status via GET /messaging/v1/messages/{requestId}, receive inbound SMS by webhook,
+    and report delivery conversion events. Includes BYON (bring your own number) contact, phone book,
+    and number provisioning services.
 - aid: tyntec:tyntec-conversations-api
   name: tyntec Conversations API
   tags:
@@ -141,11 +99,90 @@ apis:
   - url: https://github.com/tyntec/api-collection/tree/master/conversations
     type: SourceCode
   description: >-
-    One API for WhatsApp Business, Viber, and SMS. Send single (POST /messages) or
-    bulk (POST /bulks) messages, track delivery status and events, upload and
-    manage media, configure WhatsApp accounts / templates / phone-number insights,
-    and receive inbound messages and status callbacks via webhooks. tyntec is an
-    authorized WhatsApp Business Solution Provider.
+    One API for WhatsApp Business, Viber, and SMS. Send single (POST /messages) or bulk (POST /bulks)
+    messages, track delivery status and events, upload and manage media, configure WhatsApp accounts /
+    templates / phone-number insights, and receive inbound messages and status callbacks via webhooks.
+    tyntec is an authorized WhatsApp Business Solution Provider.
+- aid: tyntec:tyntec-number-information-api
+  name: tyntec Number Information API
+  description: HLR reachability/roaming and global number portability lookups (NIS).
+  humanURL: https://api.tyntec.com/reference/verify/current.html
+  baseURL: https://api.tyntec.com/verify/v1
+  tags:
+  - Number Information
+  properties:
+  - type: OpenAPI
+    url: openapi/tyntec-number-information-api-openapi.yml
+  - type: Documentation
+    url: https://www.tyntec.com/helpcenter/docs/
+  - type: APIReference
+    url: https://api.tyntec.com/reference/verify/current.html
+  - type: PostmanCollection
+    url: collections/tyntec-number-verification.postman_collection.json
+  - type: OpenCollection
+    url: collections/tyntec-number-verification.opencollection.json
+  - type: SourceCode
+    url: https://github.com/tyntec/api-collection/tree/master/verify
+- aid: tyntec:tyntec-number-verification-api
+  name: tyntec Number Verification API
+  description: Validate a phone number against reusable criteria templates (Verify API).
+  humanURL: https://api.tyntec.com/reference/verify/current.html
+  baseURL: https://api.tyntec.com/verify/v1
+  tags:
+  - Number Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/tyntec-number-verification-api-openapi.yml
+  - type: Documentation
+    url: https://www.tyntec.com/helpcenter/docs/
+  - type: APIReference
+    url: https://api.tyntec.com/reference/verify/current.html
+  - type: PostmanCollection
+    url: collections/tyntec-number-verification.postman_collection.json
+  - type: OpenCollection
+    url: collections/tyntec-number-verification.opencollection.json
+  - type: SourceCode
+    url: https://github.com/tyntec/api-collection/tree/master/verify
+- aid: tyntec:tyntec-service-api
+  name: tyntec Service API
+  description: Health and version metadata.
+  humanURL: https://api.tyntec.com/reference/verify/current.html
+  baseURL: https://api.tyntec.com/verify/v1
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/tyntec-service-api-openapi.yml
+  - type: Documentation
+    url: https://www.tyntec.com/helpcenter/docs/
+  - type: APIReference
+    url: https://api.tyntec.com/reference/verify/current.html
+  - type: PostmanCollection
+    url: collections/tyntec-number-verification.postman_collection.json
+  - type: OpenCollection
+    url: collections/tyntec-number-verification.opencollection.json
+  - type: SourceCode
+    url: https://github.com/tyntec/api-collection/tree/master/verify
+- aid: tyntec:tyntec-verify-templates-api
+  name: tyntec Verify Templates API
+  description: Create and manage the criteria templates numbers are checked against.
+  humanURL: https://api.tyntec.com/reference/verify/current.html
+  baseURL: https://api.tyntec.com/verify/v1
+  tags:
+  - Verify Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/tyntec-verify-templates-api-openapi.yml
+  - type: Documentation
+    url: https://www.tyntec.com/helpcenter/docs/
+  - type: APIReference
+    url: https://api.tyntec.com/reference/verify/current.html
+  - type: PostmanCollection
+    url: collections/tyntec-number-verification.postman_collection.json
+  - type: OpenCollection
+    url: collections/tyntec-number-verification.opencollection.json
+  - type: SourceCode
+    url: https://github.com/tyntec/api-collection/tree/master/verify
 common:
 - type: AgenticAccess
   url: agentic-access/tyntec-agentic-access.yml
