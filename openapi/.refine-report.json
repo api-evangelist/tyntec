@@ -1,0 +1,20 @@
+{
+  "provider": "tyntec",
+  "sources": [
+    "tyntec-number-information-api-openapi.yml",
+    "tyntec-number-verification-api-openapi.yml",
+    "tyntec-service-api-openapi.yml",
+    "tyntec-verify-templates-api-openapi.yml"
+  ],
+  "outputs": [
+    "tyntec-number-information-api-openapi.yml",
+    "tyntec-number-verification-api-openapi.yml",
+    "tyntec-service-api-openapi.yml",
+    "tyntec-verify-templates-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
