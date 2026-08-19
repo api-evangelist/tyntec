@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "tyntec Phone Number Intelligence Number Information Verify Templates API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verify Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List criteria templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/templates"
+          },
+          "docs": "Returns all verify criteria templates defined for the account."
+        },
+        {
+          "info": {
+            "name": "Create a criteria template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tyntec.com/verify/v1/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new verify criteria template describing the conditions a number must satisfy."
+        },
+        {
+          "info": {
+            "name": "Get a criteria template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/templates/:criteriaTemplateName",
+            "params": [
+              {
+                "name": "criteriaTemplateName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the criteria template."
+              }
+            ]
+          },
+          "docs": "Returns a single criteria template by name."
+        },
+        {
+          "info": {
+            "name": "Update a criteria template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tyntec.com/verify/v1/templates/:criteriaTemplateName",
+            "params": [
+              {
+                "name": "criteriaTemplateName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the criteria template."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the definition of an existing criteria template."
+        },
+        {
+          "info": {
+            "name": "Delete a criteria template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tyntec.com/verify/v1/templates/:criteriaTemplateName",
+            "params": [
+              {
+                "name": "criteriaTemplateName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the criteria template."
+              }
+            ]
+          },
+          "docs": "Deletes a criteria template by name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

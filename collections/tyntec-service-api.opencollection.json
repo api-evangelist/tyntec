@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "tyntec Phone Number Intelligence Number Information Service API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Service health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/health"
+          },
+          "docs": "Returns the health status of the Verify service."
+        },
+        {
+          "info": {
+            "name": "Service version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/version"
+          },
+          "docs": "Returns the deployed version of the Verify service."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

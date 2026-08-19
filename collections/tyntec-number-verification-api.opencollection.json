@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "tyntec Phone Number Intelligence Number Information Number Verification API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Number Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify a phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/verify/v1/phone/:number",
+            "params": [
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The phone number to verify, in international E.164 format without the leading plus."
+              },
+              {
+                "name": "criteria",
+                "value": "",
+                "type": "query",
+                "description": "Name of a previously created criteria template to evaluate the number against."
+              }
+            ]
+          },
+          "docs": "Validates the given phone number (E.164, without a leading +) against a named criteria template. Returns whether the number passes, plus the underlying number intelligence used to decide - validity, reachability (active subscriber), line type, operator, country, MCC/MNC, and disposable-number flags."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

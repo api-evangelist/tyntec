@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "tyntec Phone Number Intelligence Number Information API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Number Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HLR lookup (Global Number Verification)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/nis/v1/gnv",
+            "params": [
+              {
+                "name": "msisdn",
+                "value": "",
+                "type": "query",
+                "description": "The mobile number to look up, in international E.164 format."
+              }
+            ]
+          },
+          "docs": "Real-time HLR (Home Location Register) lookup for a mobile number. Returns current reachability (whether the subscriber is present on the network), the serving and original operator, roaming state, and MCC/MNC / IMSI-derived network data."
+        },
+        {
+          "info": {
+            "name": "Global number portability lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tyntec.com/nis/v1/gnp",
+            "params": [
+              {
+                "name": "msisdn",
+                "value": "",
+                "type": "query",
+                "description": "The mobile number to check, in international E.164 format."
+              }
+            ]
+          },
+          "docs": "Resolves whether a mobile number has been ported to a different operator and returns the current operator (MCC/MNC) so messages and calls are routed correctly."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

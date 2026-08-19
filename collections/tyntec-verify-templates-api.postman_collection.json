@@ -1,0 +1,819 @@
+{
+  "item": [
+    {
+      "id": "b8a78467-7be7-46bb-a243-c76013d7989e",
+      "name": "Verify Templates",
+      "description": {
+        "content": "Create and manage the criteria templates numbers are checked against.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e02bb1ea-1b4e-423d-b3ee-519305de8b3b",
+          "name": "List criteria templates",
+          "request": {
+            "name": "List criteria templates",
+            "description": {
+              "content": "Returns all verify criteria templates defined for the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "v1",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a0e27bda-c64f-43d4-ad2f-c6502c506035",
+              "name": "A list of criteria templates.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"default-mobile\",\n    \"allowedNumberTypes\": [\n      \"voip\",\n      \"fixed\"\n    ],\n    \"allowedCountries\": [\n      \"string\",\n      \"string\"\n    ],\n    \"requireReachable\": false,\n    \"rejectDisposable\": true\n  },\n  {\n    \"name\": \"default-mobile\",\n    \"allowedNumberTypes\": [\n      \"voip\",\n      \"mobile\"\n    ],\n    \"allowedCountries\": [\n      \"string\",\n      \"string\"\n    ],\n    \"requireReachable\": true,\n    \"rejectDisposable\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d79b7969-d646-48d4-9fc2-6fdc7a929bc4",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3010,\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e9fa306-926a-4bbd-9f2e-5480ae2cceea",
+          "name": "Create a criteria template",
+          "request": {
+            "name": "Create a criteria template",
+            "description": {
+              "content": "Creates a new verify criteria template describing the conditions a number must satisfy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "v1",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c009a048-f1ca-4e6a-8da2-3ee320d89844",
+              "name": "The created criteria template.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39169d81-2423-42f1-8512-f267cee64d61",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3010,\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b183aac-9c6b-4a8f-9b18-10c9881b507b",
+          "name": "Get a criteria template",
+          "request": {
+            "name": "Get a criteria template",
+            "description": {
+              "content": "Returns a single criteria template by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "v1",
+                "templates",
+                ":criteriaTemplateName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "criteriaTemplateName",
+                  "description": "(Required) The name of the criteria template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afc0a7a1-e273-4ced-9181-33f1f7efd900",
+              "name": "The requested criteria template.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates",
+                    ":criteriaTemplateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "criteriaTemplateName",
+                      "description": "(Required) The name of the criteria template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1abfd42-e0d0-4f07-91be-49d8c8e05fa4",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates",
+                    ":criteriaTemplateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "criteriaTemplateName",
+                      "description": "(Required) The name of the criteria template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3010,\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9cc845c-9719-493a-86d1-621d9a1ac7f2",
+          "name": "Update a criteria template",
+          "request": {
+            "name": "Update a criteria template",
+            "description": {
+              "content": "Replaces the definition of an existing criteria template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "v1",
+                "templates",
+                ":criteriaTemplateName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "criteriaTemplateName",
+                  "description": "(Required) The name of the criteria template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab095947-c0a5-495f-939f-744b357ac09e",
+              "name": "The updated criteria template.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates",
+                    ":criteriaTemplateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "criteriaTemplateName",
+                      "description": "(Required) The name of the criteria template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06d159dd-bc9a-48e8-bcbf-19225fc46f7d",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates",
+                    ":criteriaTemplateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "criteriaTemplateName",
+                      "description": "(Required) The name of the criteria template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"default-mobile\",\n  \"allowedNumberTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCountries\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requireReachable\": \"<boolean>\",\n  \"rejectDisposable\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3010,\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "866fb6a0-4314-42d7-ba42-45e50b7895ff",
+          "name": "Delete a criteria template",
+          "request": {
+            "name": "Delete a criteria template",
+            "description": {
+              "content": "Deletes a criteria template by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "v1",
+                "templates",
+                ":criteriaTemplateName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "criteriaTemplateName",
+                  "description": "(Required) The name of the criteria template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8619558-6020-48a0-8302-0af33bc81117",
+              "name": "The template was deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates",
+                    ":criteriaTemplateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "criteriaTemplateName",
+                      "description": "(Required) The name of the criteria template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a43bafea-a69f-40bc-95e6-dea3af965396",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "v1",
+                    "templates",
+                    ":criteriaTemplateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "criteriaTemplateName",
+                      "description": "(Required) The name of the criteria template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3010,\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tyntec.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "88eff3ec-6357-48f9-a337-d9b0c2ce4dee",
+    "name": "tyntec Phone Number Intelligence Number Information Verify Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Phone number intelligence surface of the tyntec CPaaS platform, grouping the number-verification and number-information services that answer the question \"is this phone number real, reachable, and what network is it on?\" before you save it in a CRM, message it, or call it. It combines two live tyntec products under one apikey-authenticated REST surface:\n- The Verify API (base path /verify/v1) lets you define reusable criteria\n  templates and validate a phone number against them - number format /\n  validity, active subscriber (reachability) status, line type\n  (mobile / fixed / VoIP), operator / carrier, country of origin, MCC/MNC,\n  and disposable-number detection.\n\n- The Number Information Services (base path /nis/v1) provide global network\n  lookups: HLR (Home Location Register) real-time reachability and roaming\n  state via GNV, and Global Number Portability (GNP) to resolve the operator\n  a number has been ported to.\n\nAll requests authenticate with an account API key sent in the `apikey` request header. Endpoints and paths below are grounded in tyntec's public API reference (api.tyntec.com/reference) and the tyntec/api-collection OpenAPI definitions; request/response schemas here are modeled from that documentation and simplified for cataloging - consult the live reference for exhaustive field-level detail.\n\nContact Support:\n Name: tyntec",
+      "type": "text/plain"
+    }
+  }
+}
