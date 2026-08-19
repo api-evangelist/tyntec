@@ -39,7 +39,7 @@ tags:
 - Number Portability
 created: '2026-07-11'
 modified: '2026-07-11'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: tyntec:tyntec-2fa-authentication-api
   name: tyntec 2FA Authentication API
