@@ -12,6 +12,19 @@ description: >-
   is an authorized WhatsApp Business Solution Provider. All APIs authenticate with
   an account API key sent in the apikey request header; tyntec publishes OpenAPI
   definitions for them in the public tyntec/api-collection GitHub repository.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -184,6 +197,10 @@ apis:
   - type: SourceCode
     url: https://github.com/tyntec/api-collection/tree/master/verify
 common:
+- type: IssueTracker
+  url: https://github.com/tyntec/api-collection/issues
+- type: Releases
+  url: https://github.com/tyntec/api-collection/releases
 - type: AgenticAccess
   url: agentic-access/tyntec-agentic-access.yml
 - type: DomainSecurity
