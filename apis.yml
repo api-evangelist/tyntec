@@ -163,6 +163,8 @@ apis:
   humanURL: https://api.tyntec.com/reference/verify/current.html
   baseURL: https://api.tyntec.com/verify/v1
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
