@@ -51,19 +51,29 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Problem'
     Unauthorized:
       description: Missing or invalid API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   schemas:
+    Problem:
+      type: object
+      description: Error response.
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
     VerificationResult:
       type: object
       description: Result of validating a number against a criteria template.
@@ -105,16 +115,6 @@ components:
         mnc:
           type: string
           description: Mobile Network Code.
-    Problem:
-      type: object
-      description: Error response.
-      properties:
-        status:
-          type: integer
-        title:
-          type: string
-        detail:
-          type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

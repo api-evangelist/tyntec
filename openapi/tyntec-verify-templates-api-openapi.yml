@@ -111,7 +111,30 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   schemas:
+    Problem:
+      type: object
+      description: Error response.
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
     CriteriaTemplate:
       type: object
       description: A reusable set of conditions a number must satisfy to pass verification.
@@ -142,29 +165,6 @@ components:
           description: Reject disposable / temporary numbers.
       required:
       - name
-    Problem:
-      type: object
-      description: Error response.
-      properties:
-        status:
-          type: integer
-        title:
-          type: string
-        detail:
-          type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
