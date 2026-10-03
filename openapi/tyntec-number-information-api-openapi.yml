@@ -65,28 +65,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   schemas:
-    PortabilityResult:
-      type: object
-      description: Whether a number has been ported and to which operator.
-      properties:
-        msisdn:
-          type: string
-        ported:
-          type: boolean
-        currentOperator:
-          type: string
-        mcc:
-          type: string
-        mnc:
-          type: string
     Problem:
       type: object
       description: Error response.
@@ -123,6 +102,27 @@ components:
           type: string
         countryCode:
           type: string
+    PortabilityResult:
+      type: object
+      description: Whether a number has been ported and to which operator.
+      properties:
+        msisdn:
+          type: string
+        ported:
+          type: boolean
+        currentOperator:
+          type: string
+        mcc:
+          type: string
+        mnc:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
