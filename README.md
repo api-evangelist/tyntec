@@ -1,4 +1,4 @@
-# tyntec (tyntec)
+# tyntec
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,152 +64,127 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-tyntec is a CPaaS (Communications Platform as a Service) provider whose `api.tyntec.com` REST APIs let businesses verify, authenticate, and engage mobile consumers worldwide. The platform covers **phone number verification and number information** (Verify API plus HLR lookup and global number portability), **SMS messaging**, **WhatsApp Business** and other chat-app channels via the Conversations API, and **two-factor authentication / one-time passwords** via the 2FA API. tyntec is an authorized WhatsApp Business Solution Provider.
+tyntec is a CPaaS (Communications Platform as a Service) provider whose api.tyntec.com REST APIs let businesses verify, authenticate, and engage mobile consumers worldwide. The platform covers phone number verification and number information (Verify API plus HLR lookup and global number portability), SMS messaging, WhatsApp Business and other chat-app channels via the Conversations API, and two-factor authentication / one-time passwords via the 2FA API. tyntec is an authorized WhatsApp Business Solution Provider. All APIs authenticate with an account API key sent in the apikey request header; tyntec publishes OpenAPI definitions for them in the public tyntec/api-collection GitHub repository.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/tyntec/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/tyntec/refs/heads/main/apis.yml)
+**Areas:** Number Verification · CPaaS · SMS · WhatsApp · Phone Number Intelligence · HLR Lookup · Two-Factor Authentication · OTP · Messaging · Number Portability
 
-## Access Model
+## tyntec on APIs.io
 
-tyntec runs a real, publicly documented API program. The API reference is public at [api.tyntec.com/reference](https://api.tyntec.com/reference/), and tyntec publishes open OpenAPI definitions for every product in the public [tyntec/api-collection](https://github.com/tyntec/api-collection) GitHub repository. To call the APIs you need a tyntec account and an **API key**, which is sent in the `apikey` request header on every request (the Verify reference also names the header `apiKey`; it is case-insensitive). There is no OAuth or Bearer flow. Billing is usage-based (pay-per-use against a prepaid account balance), so live calls incur per-transaction charges.
+Everything profiled for tyntec is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/tyntec/](https://apis.io/providers/tyntec/)** — or go straight to one of the APIs or properties below.
 
-Asynchronous events - SMS delivery receipts, inbound messages, WhatsApp/Viber status updates - are delivered by **HTTP webhook callbacks** to a URL you configure, not over a WebSocket. See [`review.yml`](review.yml).
+### APIs (7)
 
-> Note on artifacts: endpoint paths, base paths, and the `apikey` auth scheme in this repo are grounded in tyntec's public reference and the tyntec/api-collection specs. The OpenAPI and Postman/Open Collection artifacts in this repo model the **Number Verification + Number Information** surface in detail (the primary use case this entry targets); JSON request/response schemas are honestly modeled from the docs and simplified for cataloging. The SMS, Conversations, and 2FA APIs are cataloged with their live reference and source links.
+- [tyntec 2FA Authentication API](https://apis.io/apis/tyntec/tyntec-2fa-authentication-api/) — Programmatic two-factor authentication and one-time passwords. Send an OTP to a recipient number (POST /otp), validate the code the user enters (POST…
+- [tyntec SMS API](https://apis.io/apis/tyntec/tyntec-sms-api/) — Send and receive text messages over tyntec's global A2P SMS network. Send via POST /messaging/v1/sms, retrieve delivery status via GET…
+- [tyntec Conversations API](https://apis.io/apis/tyntec/tyntec-conversations-api/) — One API for WhatsApp Business, Viber, and SMS. Send single (POST /messages) or bulk (POST /bulks) messages, track delivery status and events, upload and…
+- [tyntec Number Information API](https://apis.io/apis/tyntec/tyntec-number-information-api/) — HLR reachability/roaming and global number portability lookups (NIS).
+- [tyntec Number Verification API](https://apis.io/apis/tyntec/tyntec-number-verification-api/) — Validate a phone number against reusable criteria templates (Verify API).
+- [tyntec Service API](https://apis.io/apis/tyntec/tyntec-service-api/) — Health and version metadata.
+- [tyntec Verify Templates API](https://apis.io/apis/tyntec/tyntec-verify-templates-api/) — Create and manage the criteria templates numbers are checked against.
 
-## Tags
+### Published properties
 
-- Number Verification
-- CPaaS
-- SMS
-- WhatsApp
-- Phone Number Intelligence
-- HLR Lookup
-- Two-Factor Authentication
-- OTP
-- Messaging
-- Number Portability
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Timestamps
+#### Agentic access (1)
 
-- **Created:** 2026-07-11
-- **Modified:** 2026-07-11
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## APIs
+- [Tyntec Agentic Access](https://apis.io/agentic-access/tyntec/tyntec-agentic-access/)
 
-### tyntec Number Verification API
+#### Collections (5)
 
-Verify a phone number before saving it to a CRM, messaging it, or calling it. Define reusable criteria templates (allowed line types, countries, reachable subscriber required, reject disposable numbers) and validate any number against them, returning validity, active-subscriber reachability, line type, operator, country of origin, MCC/MNC, and disposable-number detection.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://api.tyntec.com/reference/verify/current.html](https://api.tyntec.com/reference/verify/current.html)
-- **Base URL:** `https://api.tyntec.com/verify/v1`
+- [tyntec Phone Number Intelligence Number Information API](https://apis.io/collections/tyntec/open-tyntec-number-information-api/)
+- [tyntec Phone Number Intelligence API](https://apis.io/collections/tyntec/open-tyntec-number-verification/)
+- [tyntec Phone Number Intelligence Number Information Number Verification API](https://apis.io/collections/tyntec/open-tyntec-number-verification-api/)
+- [tyntec Phone Number Intelligence Number Information Service API](https://apis.io/collections/tyntec/open-tyntec-service-api/)
+- [tyntec Phone Number Intelligence Number Information Verify Templates API](https://apis.io/collections/tyntec/open-tyntec-verify-templates-api/)
 
-#### Tags
+#### Security (2)
 
-- Number Verification
-- Phone Number Intelligence
-- Validation
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Tyntec Authentication](https://apis.io/security/tyntec/tyntec-authentication/)
+- [Tyntec Domain Security](https://apis.io/security/tyntec/tyntec-domain-security/)
 
-- [Documentation](https://www.tyntec.com/helpcenter/docs/)
-- [API Reference](https://api.tyntec.com/reference/verify/current.html)
-- [OpenAPI](openapi/tyntec-number-verification-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tyntec-number-verification.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tyntec-number-verification.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Source Code](https://github.com/tyntec/api-collection/tree/master/verify)
+#### Plans and pricing (1)
 
-### tyntec Number Information API
+Published plans, tiers and prices.
 
-Network-grade number intelligence. HLR (Home Location Register) lookup via `GNV` returns real-time subscriber reachability, roaming state, and serving / original operator; Global Number Portability (`GNP`) resolves whether a number has been ported and to which operator, for correct message and call routing.
+- [Tyntec Plans Pricing](https://apis.io/plans/tyntec/tyntec-plans-pricing/)
 
-- **Human URL:** [https://api.tyntec.com/reference/verify/current.html](https://api.tyntec.com/reference/verify/current.html)
-- **Base URL:** `https://api.tyntec.com/nis/v1`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- HLR Lookup
-- Number Portability
-- Phone Number Intelligence
+- [Tyntec Rate Limits](https://apis.io/rate-limits/tyntec/tyntec-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://www.tyntec.com/helpcenter/docs/)
-- [API Reference](https://api.tyntec.com/reference/verify/current.html)
-- [OpenAPI](openapi/tyntec-number-verification-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tyntec-number-verification.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Source Code](https://github.com/tyntec/api-collection/tree/master/verify)
+What the API costs to run, by operation.
 
-### tyntec 2FA Authentication API
+- [Tyntec Finops](https://apis.io/finops/tyntec/tyntec-finops/)
 
-Programmatic two-factor authentication and one-time passwords. Send an OTP to a recipient number (`POST /otp`), validate the code the user enters (`POST /otp/{otp-id}/validate` returning VERIFIED, EXPIRED, WRONG_CODE, or TOO_MANY_ATTEMPTS), and read, list, or delete OTP records.
+## Where to find this API
 
-- **Human URL:** [https://api.tyntec.com/reference/otp-authentication/current.html](https://api.tyntec.com/reference/otp-authentication/current.html)
-- **Base URL:** `https://api.tyntec.com/2fa/v4`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags
-
-- Two-Factor Authentication
-- OTP
-- Number Verification
-
-#### Properties
-
-- [Documentation](https://www.tyntec.com/helpcenter/docs/)
-- [API Reference](https://api.tyntec.com/reference/otp-authentication/current.html)
-- [Source Code](https://github.com/tyntec/api-collection/tree/master/otp-authentication)
-
-### tyntec SMS API
-
-Send and receive text messages over tyntec's global A2P SMS network. Send via `POST /messaging/v1/sms`, retrieve delivery status via `GET /messaging/v1/messages/{requestId}`, receive inbound SMS by webhook, and report delivery conversion events. Includes BYON (bring your own number) contact, phone book, and number provisioning services.
-
-- **Human URL:** [https://api.tyntec.com/reference/sms/current.html](https://api.tyntec.com/reference/sms/current.html)
-- **Base URL:** `https://api.tyntec.com/messaging/v1`
-
-#### Tags
-
-- SMS
-- Messaging
-- A2P
-
-#### Properties
-
-- [Documentation](https://www.tyntec.com/helpcenter/docs/)
-- [API Reference](https://api.tyntec.com/reference/sms/current.html)
-- [Source Code](https://github.com/tyntec/api-collection/tree/master/sms)
-
-### tyntec Conversations API
-
-One API for WhatsApp Business, Viber, and SMS. Send single (`POST /messages`) or bulk (`POST /bulks`) messages, track delivery status and events, upload and manage media, configure WhatsApp accounts / templates / phone-number insights, and receive inbound messages and status callbacks via webhooks. tyntec is an authorized WhatsApp Business Solution Provider.
-
-- **Human URL:** [https://api.tyntec.com/reference/conversations/current.html](https://api.tyntec.com/reference/conversations/current.html)
-- **Base URL:** `https://api.tyntec.com/conversations/v3`
-
-#### Tags
-
-- WhatsApp
-- Messaging
-- Chat Apps
-
-#### Properties
-
-- [Documentation](https://www.tyntec.com/helpcenter/docs/channels/whatsapp-business/introduction/)
-- [API Reference](https://api.tyntec.com/reference/conversations/current.html)
-- [Source Code](https://github.com/tyntec/api-collection/tree/master/conversations)
-
-## Common Properties
-
-- [Domain Security](security/tyntec-domain-security.yml)
-- [Authentication](authentication/tyntec-authentication.yml)
-- [GitHub Organization](https://github.com/tyntec)
-- [LinkedIn](https://www.linkedin.com/company/tyntec)
 - [Website](https://www.tyntec.com)
 - [Documentation](https://api.tyntec.com/reference/)
-- [Plans](plans/tyntec-plans-pricing.yml)
-- [Rate Limits](rate-limits/tyntec-rate-limits.yml)
-- [Fin Ops](finops/tyntec-finops.yml)
 - [Blog](https://www.tyntec.com/blog)
+- [GitHub](https://github.com/tyntec)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 16.1** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 3.4 |
+| Contract governance | 0.0 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 5.3 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.0** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/tyntec/](https://apis.io/providers/tyntec/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for tyntec: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/tyntec/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
